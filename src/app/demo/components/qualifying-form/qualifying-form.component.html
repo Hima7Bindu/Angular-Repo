@@ -1,0 +1,102 @@
+<div class="card">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      
+      <!-- First Row: CIBIL Score, Mode of Salary, Net Salary -->
+      <div style="display: flex; gap: 20px; margin-bottom: 20px;">
+        <div class="form-group" style="flex: 1; min-width: 150px;">
+          <label for="cibil" class="block text-900 text-2xl font-medium mb-2" style="font-family: 'Nunito'">CIBIL Score</label>
+          <input id="cibil" type="number" placeholder="CIBIL Score" aria-describedby="cibil-help" pInputText
+            class="form-control placeholder_size"
+            formControlName="cibil"
+            [ngClass]="{ 'is-invalid': submitted && (form.get('cibil').errors || (form.get('cibil').value && form.get('cibil').value < 680)) }"
+            style="padding: 1rem; border-radius: 50px; font-family: 'Nunito'; border: 1px solid var(--primary-color); width: 100%;">
+          <div *ngIf="submitted && form.get('cibil').errors" class="text-danger" style="font-family: 'Nunito'">
+            <div *ngIf="form.get('cibil').errors['required']">CIBIL Score is required</div>
+          </div>
+          <div *ngIf="submitted && form.get('cibil').value && form.get('cibil').value < 680" class="text-warning" style="font-family: 'Nunito'">
+            CIBIL Score should be 680 or more
+          </div>
+        </div>
+  
+        <div class="form-group" style="flex: 1; min-width: 150px;">
+            <label for="modeOfSalary" class="block text-900 text-2xl font-medium mb-2" style="font-family: 'Nunito'">Mode of Salary</label>
+            <input id="modeOfSalary" type="text" placeholder="Mode of Salary" aria-describedby="modeOfSalary-help" pInputText
+              class="form-control placeholder_size"
+              formControlName="modeOfSalary"
+              [ngClass]="{ 'is-invalid': submitted && (form.get('modeOfSalary').errors || (form.get('modeOfSalary').value && form.get('modeOfSalary').value.toLowerCase() !== 'bank')) }"
+              style="padding: 1rem; border-radius: 50px; font-family: 'Nunito'; border: 1px solid var(--primary-color); width: 100%;">
+            <div *ngIf="submitted && form.get('modeOfSalary').errors" class="text-danger" style="font-family: 'Nunito'">
+              <div *ngIf="form.get('modeOfSalary').errors['required']">Mode of Salary is required</div>
+            </div>
+            <div *ngIf="submitted && form.get('modeOfSalary').value && form.get('modeOfSalary').value.toLowerCase() !== 'bank'" class="text-warning" style="font-family: 'Nunito'">
+              Mode of Salary should be 'Bank'
+            </div>
+          </div>
+  
+          <div class="form-group" style="flex: 1; min-width: 150px;">
+            <label for="netSalary" class="block text-900 text-2xl font-medium mb-2" style="font-family: 'Nunito'">Net Salary</label>
+            <input id="netSalary" type="number" placeholder="Net Salary" aria-describedby="netSalary-help" pInputText
+                class="form-control placeholder_size"
+                formControlName="netSalary"
+                [ngClass]="{ 'is-invalid': submitted && form.get('netSalary').errors }"
+                style="padding: 1rem; border-radius: 50px; font-family: 'Nunito'; border: 1px solid var(--primary-color); width: 100%;">
+            <div *ngIf="submitted && form.get('netSalary').errors" class="text-danger" style="font-family: 'Nunito'">
+                <div *ngIf="form.get('netSalary').errors['required']">Net Salary is required</div>
+                <div *ngIf="form.get('netSalary').errors['netSalary']">Net Salary should be at least 15000</div> <!-- Ensure 'netSalary' key is correct -->
+            </div>
+        </div>
+        
+        
+      </div>
+      
+      <!-- Second Row: Existing EMI, Date of Joining, Pincode of Job Location -->
+      <div style="display: flex; gap: 20px; margin-bottom: 20px;">
+        <div class="form-group" style="flex: 1; min-width: 150px;">
+          <label for="existingEmi" class="block text-900 text-2xl font-medium mb-2" style="font-family: 'Nunito'">Existing EMI</label>
+          <input id="existingEmi" type="number" placeholder="Existing EMI" aria-describedby="existingEmi-help" pInputText
+            class="form-control placeholder_size"
+            formControlName="existingEmi"
+            [ngClass]="{ 'is-invalid': submitted && form.get('existingEmi').errors }"
+            style="padding: 1rem; border-radius: 50px; font-family: 'Nunito'; border: 1px solid var(--primary-color); width: 100%;">
+          <div *ngIf="submitted && form.get('existingEmi').errors" class="text-danger" style="font-family: 'Nunito'">
+            <div *ngIf="form.get('existingEmi').errors['required']">Existing EMI is required</div>
+          </div>
+        </div>
+  
+        <div class="form-group" style="flex: 1; min-width: 150px;">
+          <label for="doj" class="block text-900 text-2xl font-medium mb-2" style="font-family: 'Nunito'">Date of Joining</label>
+          <input id="doj" type="date" placeholder="Date of Joining" aria-describedby="doj-help" pInputText
+            class="form-control placeholder_size"
+            formControlName="doj"
+            [ngClass]="{ 'is-invalid': submitted && form.get('doj').errors }"
+            style="padding: 1rem; border-radius: 50px; font-family: 'Nunito'; border: 1px solid var(--primary-color); width: 100%;">
+          <div *ngIf="submitted && form.get('doj').errors" class="text-danger" style="font-family: 'Nunito'">
+            <div *ngIf="form.get('doj').errors['required']">Date of Joining is required</div>
+          </div>
+        </div>
+          
+                <div class="form-group" style="flex: 1; min-width: 150px;">
+                  <label for="pincode" class="block text-900 text-2xl font-medium mb-2" style="font-family: 'Nunito'">Pincode of Job Location</label>
+                  <input id="pincode" type="text" placeholder="Pincode" aria-describedby="pincode-help" pInputText
+                    class="form-control placeholder_size"
+                    formControlName="pincode"
+                    [ngClass]="{ 'is-invalid': submitted && form.get('pincode').errors }"
+                    style="padding: 1rem; border-radius: 50px; font-family: 'Nunito'; border: 1px solid var(--primary-color); width: 100%;">
+                  <div *ngIf="submitted && form.get('pincode').errors" class="text-danger" style="font-family: 'Nunito'">
+                    <div *ngIf="form.get('pincode').errors['required']">Pincode is required</div>
+                  </div>
+                </div>
+              </div>
+          
+              <!-- Submit Button -->
+              <button pButton pRipple type="submit" class="btn btn-primary"
+                style="font-family: 'Nunito'; background-color: #3b82f6; color: #fff; padding: 1rem 2rem; border: none; border-radius: 0.5rem;">
+                Submit
+              </button>
+            </form>
+          </div>
+          
+          
+    <!-- </div>
+  </div> -->
+  

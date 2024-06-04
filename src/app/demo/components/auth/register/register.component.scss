@@ -1,0 +1,32 @@
+.custom-signup-button {
+    padding: 1rem;
+    border-radius: 50px;
+    font-family: 'Nunito';
+    font-size: 20px;
+    width: 100%;
+    border: 1px solid var(--primary-color);
+    box-sizing: border-box; /* Ensure padding and border are included in the width */
+}
+
+
+.min-h-screen {
+    min-height: 91vh !important;
+}
+
+.text_heading {
+    font-size: 2.75rem !important;
+}
+.navbar_heading
+{
+    font-size: 20px;
+}
+.accountfont_size{
+    font-size: 20px;
+}
+.signin_size{
+    font-size: 20px;
+}
+
+.placeholder_size{
+    font-size: 17px;
+}

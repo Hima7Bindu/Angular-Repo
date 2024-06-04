@@ -12,18 +12,40 @@ import { IconService } from './demo/service/icon.service';
 import { NodeService } from './demo/service/node.service';
 import { PhotoService } from './demo/service/photo.service';
 
+import { MessageService } from 'primeng/api';
+import { MessagesModule } from 'primeng/messages';
+import { MessageModule } from 'primeng/message';
+import { PasswordModule } from 'primeng/password';
+import { ButtonModule } from 'primeng/button';
+
+
+
+
+
+
+
+
 @NgModule({
     declarations: [
-        AppComponent, 
+        AppComponent,
+        
+        
     ],
     imports: [
         AppRoutingModule,
-        AppLayoutModule
+        AppLayoutModule,
+        MessagesModule,
+        MessageModule,
+        PasswordModule,
+        ButtonModule,
+        
+      
+        
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         CountryService, CustomerService, EventService, IconService, NodeService,
-        PhotoService, ProductService
+        PhotoService, ProductService,MessageService
     ],
     bootstrap: [AppComponent]
 })

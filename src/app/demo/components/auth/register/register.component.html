@@ -1,0 +1,106 @@
+<div class="top-bar flex justify-between items-center px-8 py-4 bg-primary-color text-white" style="background-color: white;font-family: 'Nunito';">
+    <div></div>
+    <div class="flex items-center space-x-6 ml-auto navbar_heading"> <!-- Added ml-auto class here -->
+        <a routerLink="/login" class="font-medium" style="padding-right: 20px;">SignIn</a>
+        <a href="#" class="font-medium" style="padding-right: 20px;">Contact Us</a> <!-- Added padding-right here -->
+    </div>
+</div>
+
+<div class="flex min-h-screen overflow-hidden" style="background-color: rgb(255, 255, 255);">
+    <!-- Left half: Login Form -->
+    <div class="flex-1">
+        <div class="surface-ground flex align-items-center justify-content-center min-h-screen overflow-hidden" style="background-color: white !important">
+            <div class="flex flex-column align-items-center justify-content-center">
+                <div class="text-center mb-5">
+                    <div class="text_heading text-3xl font-medium mb-2" style="font-family: 'Nunito'">Create An Account</div>
+                </div>
+                <form *ngIf="!isSuccessful" name="form" (ngSubmit)="onSubmit()" #f="ngForm" novalidate>
+                    <div class="form-group field p-fluid">
+                        <!-- Username -->
+                        <label for="username" class="block text-900 text-2xl font-medium mb-3" style="font-family: 'Nunito'">Username</label>
+                        <input id="username" type="text" placeholder="Username" aria-describedby="username-help" pInputText class="w-full md:w-30rem mb-4 form-control placeholder_size"
+                            name="username" [(ngModel)]="form.username" required minlength="3" maxlength="20" #username="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && username.errors }"
+                            [style]="{padding: '1rem', borderRadius: '50px', fontFamily: 'Nunito', border: '1px solid var(--primary-color)'}">
+                        <div *ngIf="f.submitted && username.errors" class="text-danger" style="font-family: 'Nunito'">
+                            <div *ngIf="username.errors['required']">Username is required</div>
+                            <div *ngIf="username.errors['minlength']">Username must be at least 3 characters</div>
+                            <div *ngIf="username.errors['maxlength']">Username cannot exceed 20 characters</div>
+                        </div>
+
+                        <!-- Email -->
+                        <label for="email" class="block text-900 text-2xl font-medium mb-3" style="font-family: 'Nunito'">Email</label>
+                        <input id="email" type="text" placeholder="Email address" aria-describedby="email-help" pInputText class="w-full md:w-30rem mb-4 form-control placeholder_size"
+                            name="email" [(ngModel)]="form.email" required email #email="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && email.errors }"
+                            [style]="{padding: '1rem', borderRadius: '50px', fontFamily: 'Nunito', border: '1px solid var(--primary-color)'}">
+                        <div *ngIf="f.submitted && email.errors" class="text-danger" style="font-family: 'Nunito'">
+                            <div *ngIf="email.errors['required']">Email is required</div>
+                            <div *ngIf="email.errors['email']">Invalid email format</div>
+                        </div>
+
+                        <!-- Password -->
+                        <label for="password" class="block text-900 font-medium text-2xl mb-3" style="font-family: 'Nunito'">Password</label>
+                        <div class="password-input" style="position: relative;">
+                            <input 
+                                id="password" 
+                                [type]="showPassword ? 'text' : 'password'" 
+                                placeholder="••••••••••" 
+                                name="password" 
+                                [(ngModel)]="form.password" 
+                                required 
+                                #password="ngModel"
+                                [ngClass]="{ 'is-invalid': (f.submitted || password.touched) && password.errors }"
+                                class="placeholder_size"
+                                style="padding: 1rem; border-radius: 50px; font-family: 'Nunito'; width: 100%; border: 1px solid var(--primary-color); margin-bottom: 1.5rem;">
+                            <span class="toggle-icon" (click)="togglePasswordVisibility()" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%);">
+                                <i class = "pi-eye" [ngClass]="{'pi-eye': !showPassword, 'pi-eye-slash': showPassword}" style="cursor: pointer;"></i>
+                            </span>
+                        </div>
+                        <div *ngIf="f.submitted && password.errors" class="text-danger" style="font-family: 'Nunito'">
+                            <div *ngIf="password.errors['required']">Password is required</div>
+                        </div>
+
+
+
+                        <!-- Mobile Number -->
+                        <label for="mobileNumber" class="block text-900 text-2xl font-medium mb-3" style="font-family: 'Nunito'">Mobile Number</label>
+                        <input id="mobileNumber" type="text" placeholder="Mobile Number" aria-describedby="mobileNumber-help" pInputText class="w-full md:w-30rem mb-4 form-control placeholder_size"
+                            name="mobileNumber" [(ngModel)]="form.mobileNumber" required pattern="^[0-9]{10}$" #mobileNumber="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && mobileNumber.errors }"
+                            [style]="{padding: '1rem', borderRadius: '50px', fontFamily: 'Nunito', border: '1px solid var(--primary-color)'}">
+                        <div *ngIf="f.submitted && mobileNumber.errors" class="text-danger" style="font-family: 'Nunito'">
+                            <div *ngIf="mobileNumber.errors['required']">Mobile number is required</div>
+                            <div *ngIf="mobileNumber.errors['pattern']">Mobile number must be a 10-digit number</div>
+                        </div>
+
+
+                        <!-- Forgot password link -->
+                        
+
+                        <!-- Sign In Button -->
+                        <div>
+                            <button pButton pRipple label="Sign Up" class="custom-signup-button" style="margin-bottom: 1rem;"></button>
+                        </div>
+                    </div>
+
+                    <!-- Display login error message -->
+                    <div *ngIf="isSignUpFailed" class="text-danger mb-3" style="font-family: 'Nunito'">Signup failed. Please check your information and try again.</div>
+
+                    <!-- Add margin below the Sign In button -->
+                    <p style="font-family: 'Nunito'; margin-bottom: 1rem; font-size: 20px;">Already have an account?<a class="accountfont_size no-underline ml-2 text-right cursor-pointer" style=" background-color:#B4C640 'Nunito'" [routerLink]="['/login']">LogIn</a></p>
+                </form>
+                
+                <!-- Display success message after successful login -->
+                <div *ngIf="isSuccessful" class="text-success" [routerLink]="['/dashboard']" style="font-family: 'Nunito'">
+                    Congratulations! Your account has been created successfully.
+                </div>
+            </div>
+        </div>
+    </div>
+  
+    <!-- Right half: Image -->
+    <div class="flex-1 flex justify-center items-center" style="background-color: white; width: 50%;">
+        <img src="assets/demo/images/loaan2.png" alt="Image" style="width: 80%; height: 60%; object-fit: cover; display: block; margin: auto;">
+    </div>
+</div>

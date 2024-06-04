@@ -1,31 +1,185 @@
-<div class="surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
-    <div class="flex flex-column align-items-center justify-content-center">
-        <img src="assets/layout/images/{{layoutService.config.colorScheme === 'light' ? 'logo-dark' : 'logo-white'}}.svg" alt="Sakai logo" class="mb-5 w-6rem flex-shrink-0">                
-        <div style="border-radius:56px; padding:0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%);">
-            <div class="w-full surface-card py-8 px-5 sm:px-8" style="border-radius:53px">
+<!-- <div class="top-bar flex justify-between items-center px-8 py-4 bg-primary-color text-white" style="background-color: white;font-family: 'Nunito';">
+    <div></div>
+    <div class="flex items-center space-x-6 ml-auto navbar_heading"> 
+        <a routerLink="/register" class="font-medium" style="padding-right: 20px;">Signup</a>
+        <a href="#" class="font-medium" style="padding-right: 20px;">Contact Us</a> 
+    </div>
+</div>
+
+
+<div class="flex min-h-screen overflow-hidden" style="background-color: rgb(255, 255, 255);">
+    <div class="flex-1">
+        <div class="surface-ground flex align-items-center justify-content-center min-h-screen overflow-hidden" style="background-color: white !important">
+            <div class="flex flex-column align-items-center justify-content-center">
                 <div class="text-center mb-5">
-                    <img src="assets/demo/images/login/avatar.png" alt="Image" height="50" class="mb-3">
-                    <div class="text-900 text-3xl font-medium mb-3">Welcome, Isabel!</div>
-                    <span class="text-600 font-medium">Sign in to continue</span>
+                    <div class=" text_heading text-3xl font-medium mb-3" style="font-family: 'Nunito'">Welcome Back!</div>
+                    <span class="text-xl font-medium" style="font-family: 'Nunito'">Sign in to continue</span>
+                </div>
+                <form *ngIf="!isLoggedIn" name="form" (ngSubmit)="onSubmit()" #f="ngForm" novalidate>
+                    <div class="form-group field p-fluid">
+                        <form (ngSubmit)="onSubmit(f)" #f="ngForm" style="max-width: 400px; margin: auto;">
+                            
+                            <label for="email" class="block text-900 text-2xl font-medium mb-2" style="font-family: 'Nunito'">Email</label>
+                            <input id="email" type="text" placeholder="Email address" aria-describedby="email-help" pInputText
+                                class="w-full md:w-30rem mb-4 form-control placeholder_size icon_size"
+                                name="email" [(ngModel)]="form.email" required email #email="ngModel"
+                                [ngClass]="{ 'is-invalid': f.submitted && email.errors }"
+                                [style]="{ padding: '1rem', borderRadius: '50px', fontFamily: 'Nunito', border: '1px solid var(--primary-color)', width: '100%' }">
+                            <div *ngIf="f.submitted && email.errors" class="text-danger" style="font-family: 'Nunito'">
+                                <div *ngIf="email.errors['required']">Email is required</div>
+                                <div *ngIf="email.errors['email']">Invalid email format</div>
+                            </div>
+                            
+                            <label for="password" class="block text-900 font-medium text-2xl mb-2" style="font-family: 'Nunito'">Password</label>
+                            <div class="password-input" style="position: relative; width: 100%;">
+                                <p-password id="password" [(ngModel)]="form.password" [toggleMask]="true" required #password="ngModel"
+                                    [ngClass]="{ 'is-invalid': (f.submitted || password.touched) && password.errors }"
+                                    class="placeholder_size icon_size"
+                                    [inputStyle]="{ padding: '1rem', borderRadius: '50px', fontFamily: 'Nunito', border: '1px solid var(--primary-color)', width: '100%' }"></p-password>
+                            </div>
+                            <div *ngIf="f.submitted && password.errors" class="text-danger" style="font-family: 'Nunito'">
+                                <div *ngIf="password.errors['required']">Password is required</div>
+                            </div>
+
+                        </form>
+                        
+                    <a class="font-medium no-underline ml-1 text-right cursor-pointer forgotfont_size"
+                    style="color: var(--primary-color); font-family: 'Nunito';  display: block; padding-bottom: 15px;"
+                    (click)="openForgotPasswordDialog()">Forgot password?</a>
+
+                   
+                    <div>
+                        
+                        <p-dialog 
+                            [(visible)]="resetPasswordPopupVisible" 
+                            [modal]="true" 
+                            [style]="{ width: '450px' }" 
+                            [draggable]="false" 
+                            [resizable]="false"
+                            (onHide)="closeDialog()"
+                        >
+                            <ng-template pTemplate="content">
+                                <div class="flex flex-column px-8 py-5 gap-4">
+                                    <button type="button" (click)="closeDialog()" class="close-button">&times;</button>
+                                    <svg width="33" height="35" viewBox="0 0 33 35" fill="none" xmlns="http://www.w3.org/2000/svg" class="block mx-auto">
+                                       
+                                    </svg>
+                                    <div class="flex justify-content-between items-center">
+                                        <h3 class="text-primary-50 font-semibold">Forgot Password ?</h3>
+                                    </div>
+                                    <div class="inline-flex flex-column gap-2">
+                                        <label for="username" class="text-primary-50 font-semibold">Username</label>
+                                        <input pInputText id="username" class="bg-white-alpha-20 border-none p-3 text-primary-50"/>
+                                    </div>
+                                    <div class="flex justify-content-between">
+                                        <p-button label="Submit" (click)="closeDialog()" [text]="true" styleClass="p-3 w-48 text-primary-50 border-1 border-white-alpha-30 hover:bg-white-alpha-10" />
+                                        <p-button label="Cancel" (click)="closeDialog()" [text]="true" styleClass="p-3 w-48 text-primary-50 border-1 border-white-alpha-30 hover:bg-white-alpha-10" />
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </p-dialog>
+                    </div>
+  <div>
+                            <button pButton pRipple label="Sign In" class="custom-input-button" style="margin-bottom: 1rem;" ></button> 
+                        </div>
                 </div>
 
-                <div>
-                    <label for="email1" class="block text-900 text-xl font-medium mb-2">Email</label>
-                    <input id="email1" type="text" placeholder="Email address" pInputText class="w-full md:w-30rem mb-5" style="padding:1rem">
+                <div *ngIf="isLoginFailed" class="text-danger mb-3" style="font-family: 'Nunito'">Login failed. Please check your information and try again.</div>
 
-                    <label for="password1" class="block text-900 font-medium text-xl mb-2">Password</label>
-                    <p-password id="password1" [(ngModel)]="password" placeholder="Password" [toggleMask]="true" styleClass="mb-5" inputStyleClass="w-full p-3 md:w-30rem"></p-password>
-
-                    <div class="flex align-items-center justify-content-between mb-5 gap-5">
-                        <div class="flex align-items-center">
-                            <p-checkbox id="rememberme1" [binary]="true" styleClass="mr-2"></p-checkbox>
-                            <label for="rememberme1">Remember me</label>
-                        </div>
-                        <a class="font-medium no-underline ml-2 text-right cursor-pointer" style="color: var(--primary-color)">Forgot password?</a>
-                    </div>
-                    <button pButton pRipple label="Sign In" class="w-full p-3 text-xl" [routerLink]="['/']"></button>
+          
+                <p style="font-family: 'Nunito'; margin-bottom: 1rem; font-size: 20px;">Don't have an account?<a class="accountfont_size no-underline ml-2 text-right cursor-pointer" style=" background-color:#B4C640 'Nunito'" [routerLink]="['/register']">Register</a></p>
+            </form>
+               
+                <div *ngIf="isLoggedIn" class="text-success" [routerLink]="['/dashboard']" style="font-family: 'Nunito'">
+                    Congratulations! You have successfully logged in.
                 </div>
             </div>
         </div>
     </div>
-</div>
+  
+
+    <div class="flex-1 flex justify-center items-center" style="background-color: white; width: 50%;">
+        <img src="assets/demo/images/loaan2.png" alt="Image" style="width: 80%; height: 60%; object-fit: cover; display: block; margin: auto;">
+    </div>
+     
+</div> -->
+
+
+
+
+
+
+
+
+   
+   
+
+    <div class="top-bar flex justify-between items-center px-8 py-4 bg-primary-color text-white" style="background-color: white; font-family: 'Nunito';">
+        <div></div>
+        <div class="flex items-center space-x-6 ml-auto navbar_heading"> 
+            <a routerLink="/register" class="font-medium" style="padding-right: 20px;">Signup</a>
+            <a href="#" class="font-medium" style="padding-right: 20px;">Contact Us</a> 
+        </div>
+    </div>
+    
+    <div class="flex min-h-screen overflow-hidden" style="background-color: rgb(255, 255, 255);">
+        <div class="flex-1">
+            <div class="surface-ground flex align-items-center justify-content-center min-h-screen overflow-hidden" style="background-color: white !important">
+                <div class="flex flex-column align-items-center justify-content-center">
+                    <div class="text-center mb-5">
+                        <div class="text_heading text-3xl font-medium mb-3" style="font-family: 'Nunito'">Welcome Back!</div>
+                        <span class="text-xl font-medium" style="font-family: 'Nunito'">Sign in to continue</span>
+                    </div>
+    
+                    <form *ngIf="!isLoggedIn" name="form" (ngSubmit)="onSubmit()" #f="ngForm" novalidate>
+                        <div class="form-group field p-fluid" style="max-width: 400px; margin: auto;">
+                            <label for="phoneNumber" class="block text-900 text-2xl font-medium mb-2" style="font-family: 'Nunito'">Phone Number</label>
+                            <input id="phoneNumber" type="tel" placeholder="Phone Number" aria-describedby="phoneNumber-help" pInputText
+                                class="w-full md:w-30rem mb-4 form-control placeholder_size icon_size"
+                                name="phoneNumber" [(ngModel)]="form.phoneNumber" required #phoneNumber="ngModel"
+                                [ngClass]="{ 'is-invalid': f.submitted && phoneNumber.errors }"
+                                [style]="{ padding: '1rem', borderRadius: '50px', fontFamily: 'Nunito', border: '1px solid var(--primary-color)', width: '100%' }">
+                            <div *ngIf="f.submitted && phoneNumber.errors" class="text-danger" style="font-family: 'Nunito'">
+                                <div *ngIf="phoneNumber.errors['required']">Phone Number is required</div>
+        
+                            </div>
+    
+           
+                            <label for="otp" class="block text-900 text-2xl font-medium mb-2" style="font-family: 'Nunito'">Please enter the code sent to your phone.</label>
+                            <p-inputOtp [(ngModel)]="otpValue" [length]="6" style="gap: 0">
+                                <ng-template pTemplate="input" let-token let-events="events" let-index="index">
+                                    <input 
+                                        pInputText
+                                        type="text" 
+                                        [maxLength]="1" 
+                                        (input)="events.input($event)" 
+                                        (keydown)="events.keydown($event)" 
+                                        [attr.value]="token" 
+                                        class="custom-otp-input" />
+                                    <div *ngIf="index === 3" class="px-3">
+                                        <i class="pi pi-minus"></i>
+                                    </div>
+                                </ng-template>
+                            </p-inputOtp>
+    
+                           
+                            <div class="flex justify-content-between mt-5 mb-5 align-self-stretch">
+                                <p-button label="Resend Code" [link]="true" class="p-0"></p-button>
+                                <p-button label="Submit Code"></p-button>
+                            </div>
+                        </div>
+                    </form>
+    
+                    <div *ngIf="isLoginFailed" class="text-danger mb-3" style="font-family: 'Nunito'">Login failed. Please check your information and try again.</div>
+    
+                    <p style="font-family: 'Nunito'; margin-bottom: 1rem; font-size: 20px;">Don't have an account?<a class="accountfont_size no-underline ml-2 text-right cursor-pointer" style=" font-family: 'Nunito';" [routerLink]="['/register']">Register</a></p>
+                </div>
+            </div>
+        </div>
+    
+        <div class="flex-1 flex justify-center items-center" style="background-color: white; width: 50%;">
+            <img src="assets/demo/images/loaan2.png" alt="Image" style="width: 80%; height: 60%; object-fit: cover; display: block; margin: auto;">
+        </div>
+    </div>
+    
+    

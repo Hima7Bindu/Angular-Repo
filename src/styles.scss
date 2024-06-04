@@ -12,3 +12,17 @@ $gutter: 1rem; //for primeflex grid system
 @import "assets/demo/styles/flags/flags.css";
 @import "assets/demo/styles/badges.scss";
 @import "assets/demo/styles/code.scss";
+@import "primeicons/primeicons.css";
+
+
+.blur-background::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(10px);
+    z-index: 1000; /* Adjust z-index as necessary */
+    pointer-events: none; /* Allow interactions with the dialog */
+  }

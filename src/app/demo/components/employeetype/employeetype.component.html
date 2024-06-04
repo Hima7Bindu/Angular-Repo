@@ -1,0 +1,16 @@
+<div class="dropdown-container">
+    <ul>
+      <li>
+        <p-dropdown class="dropdown"
+                    [options]="options"
+                    [(ngModel)]="selectedOption"
+                    optionLabel="name"
+                    placeholder="Select an Option"
+                    (onChange)="selectOption($event.value)"
+                    class="custom-dropdown">
+        </p-dropdown>
+      </li>
+    </ul>
+  </div>
+  
+  

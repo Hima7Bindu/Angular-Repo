@@ -1,0 +1,35 @@
+<div class="flex min-h-screen overflow-hidden" style="background-color: #fff; justify-content: center;">
+    <div class="flex-1" style="min-height: 50vh;">
+        <div class="surface-ground flex items-center justify-content-center min-h-screen overflow-hidden" style="background-color: #fff;">
+            <div class="flex flex-column items-center justify-content-center">
+                <div class="text-center mb-5">
+                    <div class="text_heading text-3xl font-medium mb-3" style="font-family: 'Nunito'; color: #333;">PAN Verification</div>
+                    <span class="text-xl font-medium" style="font-family: 'Nunito'; color: #555;">Enter your PAN number to verify</span>
+                </div>
+                <form [formGroup]="panForm" (ngSubmit)="verifyPan()">
+                    <div class="form-group">
+                        <label for="pan" class="block text-900 text-2xl font-medium mb-2" style="font-family: 'Nunito'; color: #333;">PAN Number</label>
+                        <input id="pan" type="text" formControlName="pan" class="w-full md:w-30rem mb-4 form-control"
+                            placeholder="Enter PAN number" [style]="{padding: '1rem', borderRadius: '50px', fontFamily: 'Nunito', border: '1px solid #ccc'}">
+                        <div *ngIf="panForm.controls['pan'].invalid && (panForm.controls['pan'].dirty || panForm.controls['pan'].touched)"
+                            class="text-danger" style="font-family: 'Nunito'; color: #ff5252;">
+                            <small *ngIf="panForm.controls['pan'].errors?.required">PAN is required.</small>
+                            <small *ngIf="panForm.controls['pan'].errors?.pattern">Invalid PAN format.</small>
+                        </div>
+                    </div>
+                    <button  pButton pRipple type="submit" 
+                    class="btn btn-primary" 
+                    style="font-family: 'Nunito'; background-color: #3b82f6; color: #fff; padding: 1rem 2rem; border: none; border-radius: 0.5rem; width:100px ; cursor: pointer; margin-left: 120px;">
+                        Verify
+                    </button>
+                </form>
+              
+                <p-messages [(value)]="msgs"></p-messages>
+            </div>
+        </div>
+    </div>
+    <div class="flex-1 flex justify-center items-center" style="background-color: #fff; width: 50%;min-height: 50vh;">
+        <img src="assets/demo/images/pancard.svg" alt="PAN Verification Image" style="width: 80%; height: 80%; object-fit: cover; display: block; margin: auto;">
+    </div>
+</div>
+

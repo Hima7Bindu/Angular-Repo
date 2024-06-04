@@ -9,6 +9,11 @@ import { ButtonModule } from 'primeng/button';
 import { StyleClassModule } from 'primeng/styleclass';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { DashboardsRoutingModule } from './dashboard-routing.module';
+import { StepperModule } from 'primeng/stepper';
+import { PanVerificationModule } from '../pan-verification/pan-verification.module';
+import { EmployeetypeModule } from '../employeetype/employeetype.module';
+import { QualifyingFormModule } from '../qualifying-form/qualifying-form.module';
+import { ReactiveFormsModule } from '@angular/forms'; 
 
 @NgModule({
     imports: [
@@ -20,7 +25,12 @@ import { DashboardsRoutingModule } from './dashboard-routing.module';
         StyleClassModule,
         PanelMenuModule,
         ButtonModule,
-        DashboardsRoutingModule
+        DashboardsRoutingModule,
+        StepperModule,
+        PanVerificationModule,
+        EmployeetypeModule,
+        QualifyingFormModule,
+        ReactiveFormsModule
     ],
     declarations: [DashboardComponent]
 })
